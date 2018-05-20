@@ -33,6 +33,9 @@ i18next
             employeeNo: 'Employee No.',
             employeeName: 'Employee Name',
             employeeSurename: 'Employee Surename',
+            btnClear:'Clear',
+            btnAdd:'Add',
+            btnSearch:'Search',
             department: {
               title: 'Department',
               IT: 'IT',
@@ -68,6 +71,9 @@ i18next
             employeeNo: 'รหัสพนักงาน',
             employeeName: 'ชื่อ',
             employeeSurename: 'นามสกุล',
+            btnClear:'ล้าง',
+            btnAdd:'เพิ่ม',
+            btnSearch:'ค้นหา',
             department: {
               title: 'แผนก',
               IT: 'ไอที',
