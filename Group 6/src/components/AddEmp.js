@@ -21,6 +21,7 @@ class AddEmp extends Component {
       disabledAdd: true,
       validation: {
         EmpNo: true,
+        EmpNoLen: true,
         Salary: true
       },
       validationNull: {
@@ -50,6 +51,7 @@ class AddEmp extends Component {
       disabledAdd: true,
       validation: {
         EmpNo: true,
+        EmpNoLen: true,
         Salary: true
       },
       validationNull: {
@@ -70,35 +72,26 @@ class AddEmp extends Component {
     this.state.Department === 'AllDepartment'
   )
 
-  handleChangeEmpNo(event) {
-    const { validation } = this.state
+  isNum = (text = '') => (
+    text.split('').map(t => isNaN(parseInt(t, 10))).find(b => b === true)
+  ) 
+
+  checkValidation = () => {
+    const { validation, EmpNo, Salary } = this.state
     let byPass = false
-    if (isNaN(parseInt(event.target.value, 10)) && event.target.value !== '') {
+    if (this.isNum(EmpNo) && EmpNo !== '') {
       validation['EmpNo'] = false
       byPass = true
     } else {
       validation['EmpNo'] = true
     }
-    this.setState({
-      validation,
-      EmpNo: event.target.value
-    }, () => this.setState({ disabledSearch: byPass ? true : this.isDisabledAdd() }))
-  }
-  handleChangeEmpName(event) {
-    this.setState({
-      EmpName: event.target.value,
-    }, () => this.setState({ disabledSearch: this.isDisabledAdd() }));
-  }
-  handleChangeEmpSureName(event) {
-    this.setState({
-      EmpSureName: event.target.value,
-    }, () => this.setState({ disabledSearch: this.isDisabledAdd() }));
-  }
-  handleChangeSalary(event) {
-    console.log(typeof (event.target.value))
-    const { validation } = this.state
-    let byPass = false
-    if (event.target.value.length > 8) {
+    if (EmpNo.length > 8) {
+      validation['EmpNoLen'] = false
+      byPass = true
+    } else {
+      validation['EmpNoLen'] = true
+    }
+    if (Salary.length > 8) {
       validation['Salary'] = false
       byPass = true
     } else {
@@ -106,18 +99,38 @@ class AddEmp extends Component {
     }
     this.setState({
       validation,
+    }, () => this.setState({ disabledAdd: byPass ? true : this.isDisabledAdd() }))
+  }
+  
+  handleChangeEmpNo = (event) => {
+    this.setState({
+      EmpNo: event.target.value
+    }, () => this.checkValidation())
+  }
+  handleChangeEmpName(event) {
+    this.setState({
+      EmpName: event.target.value,
+    }, () => this.checkValidation());
+  }
+  handleChangeEmpSureName(event) {
+    this.setState({
+      EmpSureName: event.target.value,
+    }, () => this.checkValidation());
+  }
+  handleChangeSalary(event) {
+    this.setState({
       Salary: event.target.value,
-      disabledSearch: this.isDisabledAdd()
-    }, () => this.setState({ disabledSearch: byPass ? false : this.isDisabledAdd() }))
+    }, () => this.checkValidation())
   }
   handleChangeSelect(event) {
     this.setState({
       Department: event.target.value
-    }, () => this.setState({ disabledSearch: this.isDisabledAdd() }));
+    }, () => this.checkValidation());
   }
 
+
   onClickAdd = () => {
-    const { validation,validationNull, EmpNo, EmpName, EmpSureName, Salary, Department } = this.state
+    const { validation, validationNull, EmpNo, EmpName, EmpSureName, Salary, Department } = this.state
     // validation['allNull'] =
     //   EmpNo !== '' &&
     //   EmpName !== '' &&
@@ -126,36 +139,36 @@ class AddEmp extends Component {
     //   Department !== 'AllDepartment'
     // console.log(validation) 
     let check = true
-    if(EmpNo === '') {
+    if (EmpNo === '') {
       validationNull['EmpNo'] = false
       check = false
     } else {
-      validationNull['EmpNo'] = true      
+      validationNull['EmpNo'] = true
     }
-    if(EmpName === '') {
+    if (EmpName === '') {
       validationNull['EmpName'] = false
       check = false
     } else {
-      validationNull['EmpName'] = true      
+      validationNull['EmpName'] = true
     }
-    if(EmpSureName === '') {
+    if (EmpSureName === '') {
       validationNull['EmpSureName'] = false
       check = false
     } else {
-      validationNull['EmpSureName'] = true      
+      validationNull['EmpSureName'] = true
     }
-    if(Salary === '') {
+    if (Salary === '') {
       validationNull['Salary'] = false
       check = false
     } else {
-      validationNull['Salary'] = true      
+      validationNull['Salary'] = true
     }
-    if(Department === 'AllDepartment') {
+    if (Department === 'AllDepartment') {
       validationNull['Department'] = false
       check = false
     } else {
-      validationNull['Department'] = true      
-    } 
+      validationNull['Department'] = true
+    }
     if (check) {
       database.ref('employee').push({
         EmpNo: EmpNo,
@@ -270,7 +283,7 @@ class AddEmp extends Component {
                     {/* <svg class="jss33 jss32" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M7 10l5 5 5-5z"></path></svg> */}
                     {/* </div> */}
-                    <Button variant="raised" style={{ backgroundColor: '#0978ad', color: 'white', fontWeight: '600' }} className={'button'} onClick={() => { this.onClickAdd() }} >
+                    <Button variant="raised" style={{ backgroundColor: this.state.disabledAdd ? '#e5e5e5' : '#0978ad', color: 'white', fontWeight: '600' }} disabled={this.state.disabledAdd} className={'button'} onClick={() => { this.onClickAdd() }} >
                       {t('formManageUser.button.add', { lng })}
                     </Button>
                     {/* <button className='btnSearch' onClick={() => this.onClickSearch()}>

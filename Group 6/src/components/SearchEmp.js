@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,8 +8,9 @@ import ListData from './ListData';
 import { database } from '../configs/firebase';
 import { I18n } from 'react-i18next'
 import Popup from './Popup'
+import { isNumber } from 'util';
 
-class SearchEmp extends Component {
+class SearchEmp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +24,7 @@ class SearchEmp extends Component {
       disabledSearch: true,
       validation: {
         EmpNo: true,
+        EmpNoLen: true,
         Salary: true
       }
     };
@@ -41,26 +43,29 @@ class SearchEmp extends Component {
       EmpSureName: '',
       Salary: '',
       Department: 'AllDepartment',
-      data: {},
-      fullData: {},
+      data: prevState.fullData,
       disabledSearch: true,
       validation: {
         EmpNo: true,
+        EmpNoLen: true,
         Salary: true
       }
     }))
   }
 
   onClickSearch = () => {
-    this.setState((prevState) => ({
-      data: Object.keys(prevState.data).filter(key => (
-        this.searching(prevState.EmpNo, prevState.data[key].EmpNo) &&
-        this.searching(prevState.EmpName, prevState.data[key].EmpName) &&
-        this.searching(prevState.EmpSureName, prevState.data[key].EmpSureName) &&
-        this.searching(prevState.Salary, prevState.data[key].Salary) &&
-        (prevState.Department === 'AllDepartment' || prevState.Department === prevState.data[key].Department)
-      )).map(key => prevState.data[key])
-    }))
+    const {EmpNo,EmpName,EmpSureName,Salary,Department,data} = this.state
+    const dataQ = {}
+    Object.keys(data).filter(key => (
+        this.searching(EmpNo, data[key].EmpNo) &&
+        this.searching(EmpName, data[key].EmpName) &&
+        this.searching(EmpSureName, data[key].EmpSureName) &&
+        this.searching(Salary, data[key].Salary) &&
+        (Department === 'AllDepartment' || Department === data[key].Department)
+      )).forEach(key => {
+        dataQ[key] = data[key]
+      })
+    this.setState({data: dataQ})
   }
 
   searching = (pattern = '', text = '') => {
@@ -94,36 +99,26 @@ class SearchEmp extends Component {
     this.state.Department === 'AllDepartment'
   )
 
-  handleChangeEmpNo(event) {
-    const { validation } = this.state
+  isNum = (text = '') => (
+    text.split('').map(t => isNaN(parseInt(t, 10))).find(b => b === true)
+  )
+
+  checkValidation = () => {
+    const { validation, EmpNo, Salary } = this.state
     let byPass = false
-    if (isNaN(parseInt(event.target.value, 10)) && event.target.value !== '') {
+    if (this.isNum(EmpNo) && EmpNo !== '') {
       validation['EmpNo'] = false
       byPass = true
     } else {
       validation['EmpNo'] = true
     }
-    console.log(this.isDisabledSearch())
-    this.setState({
-      validation,
-      EmpNo: event.target.value
-    }, () => this.setState({ disabledSearch: byPass ? true : this.isDisabledSearch() }))
-  }
-  handleChangeEmpName(event) {
-    this.setState({
-      EmpName: event.target.value,
-    }, () => this.setState({ disabledSearch: this.isDisabledSearch() }));
-  }
-  handleChangeEmpSureName(event) {
-    this.setState({
-      EmpSureName: event.target.value,
-    }, () => this.setState({ disabledSearch: this.isDisabledSearch() }));
-  }
-  handleChangeSalary(event) {
-    console.log(typeof (event.target.value))
-    const { validation } = this.state
-    let byPass = false
-    if (event.target.value.length > 8) {
+    if (EmpNo.length > 8) {
+      validation['EmpNoLen'] = false
+      byPass = true
+    } else {
+      validation['EmpNoLen'] = true
+    }
+    if (Salary.length > 8) {
       validation['Salary'] = false
       byPass = true
     } else {
@@ -131,14 +126,33 @@ class SearchEmp extends Component {
     }
     this.setState({
       validation,
+    }, () => this.setState({ disabledSearch: byPass ? true : this.isDisabledSearch() }))
+  }
+
+  handleChangeEmpNo = (event) => {
+    this.setState({
+      EmpNo: event.target.value
+    }, () => this.checkValidation())
+  }
+  handleChangeEmpName(event) {
+    this.setState({
+      EmpName: event.target.value,
+    }, () => this.checkValidation());
+  }
+  handleChangeEmpSureName(event) {
+    this.setState({
+      EmpSureName: event.target.value,
+    }, () => this.checkValidation());
+  }
+  handleChangeSalary(event) {
+    this.setState({
       Salary: event.target.value,
-      disabledSearch: this.isDisabledSearch()
-    }, () => this.setState({ disabledSearch: byPass ? false : this.isDisabledSearch() }))
+    }, () => this.checkValidation())
   }
   handleChangeSelect(event) {
     this.setState({
       Department: event.target.value
-    }, () => this.setState({ disabledSearch: this.isDisabledSearch() }));
+    }, () => this.checkValidation());
   }
 
   componentWillMount = () => {
@@ -188,8 +202,8 @@ class SearchEmp extends Component {
                     <TextField
                       className='textField'
                       // hintText="Employee No."
-                      error={!this.state.validation.EmpNo}
-                      helperText={this.state.validation.EmpNo ? '' : t('searchEmp.validation.empno', { lng })}
+                      error={!this.state.validation.EmpNo || !this.state.validation.EmpNoLen}
+                      helperText={this.state.validation.EmpNo ? this.state.validation.EmpNoLen ? '' : t('searchEmp.validation.salary', { lng }) : t('searchEmp.validation.empno', { lng })}
                       label={t('formManageUser.employeeNo', { lng })}
                       // placeholder="Placeholder"
                       // underlineFocusStyle={styles.underlineStyle}

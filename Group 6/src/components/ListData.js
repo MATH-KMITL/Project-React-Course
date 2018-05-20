@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Popup from './Popup'
+import PopUpDel from './PopUpDel'
 
 export default class Import extends React.Component {
 
@@ -68,11 +69,7 @@ export default class Import extends React.Component {
                                 <TableCell style={{ textAlign: 'center' }} >{data[key].Department}</TableCell>
                                 <TableCell style={{ textAlign: 'center' }} numeric>{data[key].Salary}</TableCell>
                                 <TableCell style={{ textAlign: 'center' }} ><Popup onClickEdit={onClickEdit} index={key} keyData={data[key].key} data={{ EmpNo: data[key].EmpNo, EmpName: data[key].EmpName, EmpSureName: data[key].EmpSureName, Department: data[key].Department, Salary: data[key].Salary }} lng={lng} /></TableCell>
-                                <TableCell style={{ textAlign: 'center' }} >
-                                    <svg viewBox="0 0 24 24" style={{ height: 50, width: 50 }} onClick={() => this.onClickDelete(data[key].key)}>
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z"></path>
-                                    </svg>
-                                </TableCell>
+                                <TableCell style={{ textAlign: 'center' }} ><PopUpDel onClickDelete={() => this.onClickDelete(data[key].key)} lng={lng} /></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

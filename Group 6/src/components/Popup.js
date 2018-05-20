@@ -3,7 +3,6 @@ import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 import TextField from '@material-ui/core/TextField';
 import NumberFormat from 'react-number-format'
-import RaisedButton from 'material-ui/RaisedButton';
 import Button from '@material-ui/core/Button'
 import { I18n } from 'react-i18next'
 import { database } from '../configs/firebase'
@@ -24,6 +23,11 @@ export default class DialogExampleSimple extends React.Component {
             validation['EmpNo'] = false
         } else {
             validation['EmpNo'] = true
+        }
+        if (EmpNo.length > 8) {
+            validation['EmpNoLen'] = false
+        } else {
+            validation['EmpNoLen'] = true
         }
         if (Salary.length > 8) {
             validation['Salary'] = false
@@ -59,7 +63,7 @@ export default class DialogExampleSimple extends React.Component {
         const { keyData } = this.props
         database.ref('employee').once('value', snapshot => {
             const result = snapshot.val()
-            const oldData = result[Object.keys(result).find(key => key == keyData)]
+            const oldData = result[Object.keys(result).find(key => key === keyData)]
             this.setState({ oldData })
         });
     }
@@ -72,17 +76,14 @@ export default class DialogExampleSimple extends React.Component {
         this.setState({ open: false });
     };
 
-    isSame = () => {
-        const { EmpNo, EmpName, EmpSureName, Department, Salary, oldData } = this.state
-        this.setState({
-            disableOk:
-                EmpNo == oldData.EmpNo &&
-                EmpName == oldData.EmpName &&
-                EmpSureName == oldData.EmpSureName &&
-                Department == oldData.Department &&
-                Salary == oldData.Salary
-        })
-    }
+    isSame = () => (
+        this.state.EmpNo === this.state.oldData.EmpNo &&
+        this.state.EmpName === this.state.oldData.EmpName &&
+        this.state.EmpSureName === this.state.oldData.EmpSureName &&
+        this.state.Department === this.state.oldData.Department &&
+        this.state.Salary === this.state.oldData.Salary
+    )
+
 
     // handleChangeEmpNo = (event) => {
     //     const { data } = this.state
@@ -123,56 +124,61 @@ export default class DialogExampleSimple extends React.Component {
         this.state.Department === 'AllDepartment'
     )
 
-    handleChangeEmpNo = (event) => {
-        const { validation } = this.state
+    checkValidation = () => {
+        const { validation, EmpNo, Salary } = this.state
         let byPass = false
-        if (isNaN(parseInt(event.target.value, 10)) && event.target.value !== '') {
+        if (this.isNum(EmpNo) && EmpNo !== '') {
             validation['EmpNo'] = false
             byPass = true
         } else {
             validation['EmpNo'] = true
         }
-        console.log(this.isDisabledOK())
-        this.setState({
-            validation,
-            EmpNo: event.target.value
-        }, () => this.setState({ disabledSearch: byPass ? true : this.isDisabledOK() }))
-        this.isSame()
-    }
-    handleChangeEmpName = (event) => {
-        this.setState({
-            EmpName: event.target.value,
-        }, () => this.setState({ disabledSearch: this.isDisabledOK() }));
-        this.isSame()
-    }
-    handleChangeEmpSureName = (event) => {
-        this.setState({
-            EmpSureName: event.target.value,
-        }, () => this.setState({ disabledSearch: this.isDisabledOK() }));
-        this.isSame()
-    }
-    handleChangeSalary = (event) => {
-        console.log(typeof (event.target.value))
-        const { validation } = this.state
-        let byPass = false
-        if (event.target.value.length > 8) {
+        if (EmpNo.length > 8) {
+            validation['EmpNoLen'] = false
+            byPass = true
+        } else {
+            validation['EmpNoLen'] = true
+        }
+        if (Salary.length > 8) {
             validation['Salary'] = false
             byPass = true
         } else {
             validation['Salary'] = true
         }
+        console.log(byPass, this.isDisabledOK(), this.isSame())
         this.setState({
             validation,
+        }, () => this.setState({ disableOk: byPass ? true : this.isDisabledOK() || this.isSame() }))
+    }
+
+    isNum = (text = '') => (
+        text.split('').map(t => isNaN(parseInt(t, 10))).find(b => b === true)
+    )
+
+    handleChangeEmpNo = (event) => {
+        this.setState({
+            EmpNo: event.target.value
+        }, () => this.checkValidation())
+    }
+    handleChangeEmpName = (event) => {
+        this.setState({
+            EmpName: event.target.value,
+        }, () => this.checkValidation());
+    }
+    handleChangeEmpSureName = (event) => {
+        this.setState({
+            EmpSureName: event.target.value,
+        }, () => this.checkValidation());
+    }
+    handleChangeSalary = (event) => {
+        this.setState({
             Salary: event.target.value,
-            disabledSearch: this.isDisabledOK()
-        }, () => this.setState({ disabledSearch: byPass ? false : this.isDisabledOK() }))
-        this.isSame()
+        }, () => this.checkValidation())
     }
     handleChangeSelect = (event) => {
         this.setState({
             Department: event.target.value
-        }, () => this.setState({ disabledSearch: this.isDisabledOK() }));
-        this.isSame()
+        }, () => this.checkValidation());
     }
 
     // clickOkButton = () => {
@@ -194,7 +200,8 @@ export default class DialogExampleSimple extends React.Component {
         //         onClick={this.handleClose}
         //     />,
         // ];
-        const { index, lng, onClickEdit } = this.props
+        const { index, lng, onClickEdit, keyData } = this.props
+        const { EmpNo, EmpName, EmpSureName, Department, Salary, disableOk } = this.state
         return (
             <div>
                 <svg viewBox="0 0 24 24" style={{ height: 50, width: 50 }} onClick={this.handleOpen} >
@@ -212,6 +219,7 @@ export default class DialogExampleSimple extends React.Component {
                             <div className={'popUpContainer'} >
                                 <div className={'popUpHeader'} >
                                     <p id={'popUpHeader'} >{t('popUp.title', { lng })}</p>
+                                    <p id={'popUpHeader'} onClick={() => { this.handleClose() }} >X</p>
                                 </div>
                                 <div className={'popUpCenter'} >
                                     <div className='leftBody'>
@@ -219,8 +227,8 @@ export default class DialogExampleSimple extends React.Component {
                                             className='textFieldPopUp'
                                             // hintText="Employee No."
                                             // errorText="This field is required" 
-                                            error={!this.state.validation.EmpNo}
-                                            helperText={this.state.validation.EmpNo ? '' : t('searchEmp.validation.empno', { lng })}
+                                            error={!this.state.validation.EmpNo || !this.state.validation.EmpNoLen}
+                                            helperText={this.state.validation.EmpNo ? this.state.validation.EmpNoLen ? '' : t('searchEmp.validation.salary', { lng }) : t('searchEmp.validation.empno', { lng })}
                                             label={t('formManageUser.employeeNo', { lng })}
                                             // placeholder="Placeholder"
                                             // underlineFocusStyle={styles.underlineStyle}
@@ -284,7 +292,7 @@ export default class DialogExampleSimple extends React.Component {
 
                                 </div>
                                 <div className={'popUpBot'} >
-                                    <Button variant="raised" className={'popUpButton'} style={{ backgroundColor: this.state.disableOk ? '#e5e5e5' : '#449d44', color: 'white', fontWeight: 600 }} disabled={this.state.disableOk} onClick={() => { onClickEdit(index, this.state.data); this.handleClose() }} > {t('formManageUser.button.ok', { lng })} </Button>
+                                    <Button variant="raised" className={'popUpButton'} style={{ backgroundColor: disableOk ? '#e5e5e5' : '#449d44', color: 'white', fontWeight: 600 }} disabled={disableOk} onClick={() => { onClickEdit(index, { EmpNo, EmpName, EmpSureName, Department, Salary, key: keyData }); this.handleClose() }} > {t('formManageUser.button.ok', { lng })} </Button>
                                     <Button variant="raised" className={'popUpButton'} style={{ backgroundColor: 'white', fontWeight: 600, marginLeft: 20 }} onClick={() => { this.handleClose() }} > {t('formManageUser.button.cacel', { lng })} </Button>
                                 </div>
                             </div>

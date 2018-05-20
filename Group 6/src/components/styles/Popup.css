@@ -1,8 +1,12 @@
 .popUpContainer {
     height: 55vh 
 }
+.popUpContainerDel {
+    height: 35vh 
+}
 .popUpHeader { 
     display: flex;
+    justify-content: space-between;
     align-items: center;
     height: 5vh; 
     border-bottom: 3px solid gray ;
@@ -17,6 +21,14 @@
     justify-content: space-around;
     align-items: center;
     height: 40vh;
+    /* background-color: aqua */
+}
+.popUpCenterDel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
     /* background-color: aqua */
 }
 .popUpBot {
