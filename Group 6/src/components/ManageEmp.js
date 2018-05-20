@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import AddEmp from './AddEmp';
+import AddEmp from './AddEmp'; 
+import Button from '@material-ui/core/Button'
 import SearchEmp from './SearchEmp';
 import './styles/ManageEmp.css';
 

@@ -22,12 +22,24 @@ i18next
           },
           searchEmp: {
             title: 'Search Employee',
+            validation: {
+              empno: 'must be number',
+              salary: 'Max length = 8'
+            }
           },
           addEmp: {
             title: 'Add Employee',
+            validation: {
+              empno: 'must be number',
+              salary: 'Max length = 8',
+              required: 'This is required'
+            }
           },
           searchEmpCritieria: {
             title: 'Critieria',
+          },
+          popUp : {
+            title : 'Edit'
           },
           formManageUser: {
             employeeNo: 'Employee No.',
@@ -40,7 +52,14 @@ i18next
               Marketing: 'Marketing',
               AllDepartment: 'All Department',
             },
-            salary: 'Saraly',
+            salary: 'Salary',
+            button: {
+              search: 'SEARCH',
+              add: 'ADD',
+              clear: 'CLEAR',
+              ok: 'OK',
+              cacel: 'CANCEL'
+            }
           },
         },
       },
@@ -57,12 +76,24 @@ i18next
           },
           searchEmp: {
             title: 'ค้นหาพนักงาน',
+            validation: {
+              empno: 'ต้องเป็นตัวเลข',
+              salary: 'ความยาวสูงสุดตัวอักษร = 8'
+            }
           },
           addEmp: {
             title: 'เพิ่มพนักงาน',
+            validation: {
+              empno: 'ต้องเป็นตัวเลข',
+              salary: 'ความยาวสูงสุดตัวอักษร = 8',
+              required: 'ต้องใส่ค่านะจ๊ะ'
+            }
           },
           searchEmpCritieria: {
             title: 'ค้นหาข้อมูลพนักงาน',
+          },
+          popUp : {
+            title : 'แก้ไข'
           },
           formManageUser: {
             employeeNo: 'รหัสพนักงาน',
@@ -76,6 +107,13 @@ i18next
               AllDepartment: 'เลือกทุกแผนก',
             },
             salary: 'เงินเดือน',
+            button: {
+              search: 'ค้นหา',
+              add: 'เพิ่ม',
+              clear: 'ล้าง',
+              ok: 'ตกลง',
+              cacel: 'ยกเลิก'
+            }
           },
         },
       },
