@@ -1,0 +1,172 @@
+.tr{
+    background-color: black;
+}
+
+.th{
+    color: white;
+}
+
+
+.input1 {
+    margin-left: 100px;}   
+    *{ box-sizing :border-box; }
+
+    fieldset {
+      margin-left: 3px;
+      margin-right: 3px;
+      margin-top: 3px;
+      padding-bottom: 3px;
+      padding-left: 3px;
+      padding-right: 3px;
+      padding-top: 3px;
+      margin-bottom: 1.45rem;
+      margin-inline-end: 3px
+      
+    }
+    fieldset {
+      border: 1px solid silver;
+      margin: 0 2px;
+      padding: .35em .625em .75em;
+    }
+    
+    
+    
+    /* form starting stylings ------------------------------- */
+    .form{
+      padding: 30px;
+    }
+    
+    
+    
+    .format{
+      display: flex ; 
+      flex-direction: row ; 
+      
+      
+      
+    }
+    
+    
+    .group 			  { 
+      position:relative; 
+      margin-bottom:45px; 
+      margin-top:45px; 
+      margin:  15px ;
+    }
+    input ,select 				{
+      font-size:18px;
+      padding:10px 10px 10px 5px;
+      display:block;
+      width:500px;
+      border:none;
+      border-bottom:1px solid #757575;
+    }
+    input:focus , select:focus 		{ outline:none; }
+    
+    /* LABEL ======================================= */
+    label 				 {
+      color:#999; 
+      font-size:18px;
+      font-weight:normal;
+      position:absolute;
+      pointer-events:none;
+      left:5px;
+      top:10px;
+      transition:0.2s ease all; 
+      -moz-transition:0.2s ease all; 
+      -webkit-transition:0.2s ease all;
+      
+    }
+    
+    /* active state */
+    input:focus ~ label, input:valid ~ label ,select:focus ~ label, select:valid ~ label		{
+      top:-10px;
+      font-size:14px;
+      color:#5264AE;
+    }
+    
+    /* BOTTOM BARS ================================= */
+    .bar 	{ position:relative; display:block; width:500px; }
+    .bar:before, .bar:after 	{
+      
+      content:'';
+      height:2px; 
+      width:0;
+      bottom:1px; 
+      position:absolute;
+      background:#5264AE; 
+      transition:0.2s ease all; 
+      -moz-transition:0.2s ease all; 
+      -webkit-transition:0.2s ease all;
+    }
+    .bar:before {
+      left:50%
+    }
+    .bar:after {
+      right:50%; 
+    }
+    
+    /* active state */
+    input:focus ~ .bar:before, input:focus ~ .bar:after,select:focus ~ .bar:before, select:focus ~ .bar:after {
+      width:50%;
+      
+      
+    }
+    
+    /* HIGHLIGHTER ================================== */
+    .highlight {
+      position:absolute;
+      height:60%; 
+      width:500px; 
+      top:25%; 
+      left:0;
+      pointer-events:none;
+      opacity:0.5;
+    }
+    
+    active state
+    input:focus ~ .highlight {
+      -webkit-animation:inputHighlighter 0.3s ease;
+      -moz-animation:inputHighlighter 0.3s ease;
+      animation:inputHighlighter 0.3s ease;
+    }
+    
+    /* ANIMATIONS ================ */
+    @-webkit-keyframes inputHighlighter {
+        from { background:#5264AE; }
+      to 	{ width:0; background:transparent; }
+    }
+    @-moz-keyframes inputHighlighter {
+        from { background:#5264AE; }
+      to 	{ width:0; background:transparent; }
+    }
+    @keyframes inputHighlighter {
+        from { background:#5264AE; }
+      to 	{ width:0; background:transparent; }
+    }
+.button3 {
+    background-color: rgb(250, 252, 246); /* Green */
+    color: rgb(0, 0, 0);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 100px;
+    cursor: pointer;
+    border: 2px solid rgb(245, 36, 8);
+}
+
+.button4 {
+    background-color: rgb(250, 252, 246); /* Green */
+    color: rgb(0, 0, 0);
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4Spx 2px;
+    cursor: pointer;
+    border: 2px solid rgb(245, 36, 8);
+    margin-left: 50px;
+}
