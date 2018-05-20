@@ -1,0 +1,195 @@
+
+
+/********************************************************************************************************************************/
+/************************************************************     TOP     *******************************************************/
+/********************************************************************************************************************************/
+
+
+.textbox-eff{
+    margin-top:30px;
+} 
+.row{
+    margin-top: 20px ;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position:relative;
+}
+.rowr{
+    margin-right:60px;
+    position:relative;
+}
+.bordertext{
+    margin: 30px 20px 30px 20px;
+    padding:0px 1px 50px 30px;
+    border: 2px solid darkgray;
+    border-radius: 15px;
+}
+.texttop{
+    font-size: 130%;
+    width:70px;
+    margin-top:-20px;
+    margin-left: -20px;
+    color: orange;
+    background:white;
+    font-family:"Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+    font-weight: bold;
+}
+.dept{
+  margin-top:-3% ;
+  font-size: 85%;
+  color: orange;
+}
+.listdept{
+  font-size:19px;
+  margin-top: 3%;
+  width:552px;
+  font-family:"Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+
+
+
+
+
+/********************************************************************************************************************************/
+/*********************************************************    TEXTBOX    ********************************************************/
+/********************************************************************************************************************************/
+
+
+
+.group 			  { 
+  position:relative; 
+  margin-bottom:5px; 
+}
+input 				{
+  font-size:18px;
+  padding:10px 10px 5px 5px;
+  display:block;
+  width:551px;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+input:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+label 				 {
+  font-family:"Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.colorl{
+  color:gray;
+}
+
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:orange;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:440px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  widows:0px;;
+  bottom:0px; 
+  position:absolute;
+  background:orange; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:55.5%;
+}
+.bar:after {
+  right: 30%;
+}
+
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:70%;
+}
+
+
+
+
+/********************************************************************************************************************************/
+/************************************************************    BUTTON   *******************************************************/
+/********************************************************************************************************************************/
+
+
+
+.btnSearch{
+  margin-left: 32%;
+  margin-right: 1%;
+}
+.btn{
+  display: inline-flex;
+  height: 40px;
+  width: 150px;
+  background-color: white;
+  border: 2px solid orange;
+  border-radius: 10px;
+  margin: 20px 20px 20px 20px;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95em;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#btneff {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  align-items: center;
+  color: orange;
+}
+
+#btneff a {
+  position: relative;
+  left: 0;
+  transition: all .35s ease-Out;
+  color: black;
+  text-decoration: none;
+  font-family:Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans serif";
+    font-weight: bold;
+}
+
+#dub-arrow {
+  width: 100%;
+  height: 5%;
+  left: -200px;
+  position: absolute;
+  padding:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .30s ease-Out;
+  bottom: 0px;
+}
+
+#btneff img {
+  width: 20px;
+  height: auto;
+}
+
+#btneff:hover #dub-arrow {
+  left: 0;
+}
+
+#btneff:hover a {
+  left: 150px;
+}
