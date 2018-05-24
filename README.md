@@ -3,7 +3,7 @@
 
 ![920544_7d1f](https://user-images.githubusercontent.com/25294734/34830048-42bcf876-f715-11e7-91ce-6f360a6ae9a5.jpg)
 
-Slide url : https://github.com/Kzis/React-Course/tree/master/Presentation
+Slide url : https://github.com/MATH-KMITL/react-course/tree/master/lecture
 
 - [x] WEEK1 : [Introduction & Version control(Git)](https://github.com/MATH-KMITL/react-course/tree/master/lecture/Week%2001%20-%20%5B13-01-2018%5D%20-%20Git)
 - [x] WEEK2 : [HTML-CSS(Flexbox,MediaQueries,Github Pages)](https://github.com/MATH-KMITL/react-course/tree/master/lecture/Week%2002%20-%20%5B20-01-2018%5D%20-%20HTML%20CSS)
