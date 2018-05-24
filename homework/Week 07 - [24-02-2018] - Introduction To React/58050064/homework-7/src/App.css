@@ -1,0 +1,181 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/*** Fonts ***/
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,500,700');
+
+/*** General resets ***/
+* {
+	box-sizing: border-box; /* 1 */
+}
+
+body {
+	margin: 0;
+	font-family: 'Oswald', sans-serif;
+	padding: 1rem;
+	background-color: #401934;
+}
+
+h1, h2, h3, h4, h5, h6{
+	margin: 0;
+	padding: 0;
+}
+
+ul{
+	margin: 0;
+	padding: 0;
+}
+
+li{
+	list-style: none;
+	margin: 0;
+}
+
+/*** Main structure ***/
+.container {
+	display: -webkit-flex;
+	display: flex;
+	max-width: 1000px;
+	margin: 0 auto;
+	box-shadow: 1px 1px 30px #000000;
+}
+.aside {
+	-webkit-flex: 1;
+    flex: 1;
+    flex-basis:25%;
+	background-color: #7a164a;
+	padding: 2rem;
+	text-align: center;
+	border:8px solid #f21a2f;
+	color: white;
+}
+
+.main{
+	-webkit-flex: 3;
+    flex: 3;
+    flex-basis:75%;
+    background: url('http://www.gabrielhidalgo.com.au/others-images/bill-murray-cv-background.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+
+.main p{
+	margin: 0;
+	padding:0.5rem 0 1rem 0;
+}
+/*** Main section ***/
+.main-info{
+	padding:2rem;
+	color: white;
+}
+
+.main-info p{
+	font-weight: 400;
+}
+
+.main-info a{
+	color: white;
+	text-decoration: underline;
+}
+
+.secondary-info{
+	padding:2rem;
+	color: white;
+	border-top: 1px solid white;
+}
+
+/*** Aside section ***/
+.aside h1{
+	font-size: 2.5rem;
+}
+
+.aside img{
+	border-radius: 50%;
+	width: 100%;
+	max-width:250px;
+	min-width:200px;
+	text-align: center;
+	box-shadow: 3px 3px 5px #401934;
+	margin: 1rem 0;
+	border:2px solid white; 
+}
+
+.aside .social-media ul li{
+	padding: 0.5rem 0;
+	border-bottom: 1px solid white;
+}
+
+.aside .social-media a{
+	color: white;
+	text-decoration: none;
+}
+
+.basic-information{
+	margin: 2rem 0 0 0;
+}
+
+.basic-information h3{
+	margin: 0.3rem 0;
+}
+
+.basic-information p{
+	margin: 0;
+}
+
+.basic-information a{
+	color: white;
+}
+/* Small screens */
+@media all and (max-width:700px) {
+.container {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+
+.aside {
+	width:100%;
+	padding: 2rem 0;
+}
+
+.main{
+	width: 100%;
+}
+
+.aside .social-media ul li{
+	padding: 0.5rem;
+	display: inline-block;
+	border-bottom: none;
+}
+
+.aside .social-media a{
+	text-decoration: none;
+}
+}
