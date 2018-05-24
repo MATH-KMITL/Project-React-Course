@@ -12,3 +12,4 @@ Slide url : https://github.com/Kzis/React-Course/tree/master/Presentation
   - [material-ui](https://github.com/VatNan/example-material-ui)
   - react-recompose (ตัดออกสอนไม่ทัน)
   - [react-i18next](https://github.com/VatNan/example-react-i18next)
+ 
