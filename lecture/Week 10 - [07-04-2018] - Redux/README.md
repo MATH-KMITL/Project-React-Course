@@ -9,3 +9,4 @@ Slide url : https://github.com/Kzis/React-Course/tree/master/Presentation
 - [x] WEEK10 : Redux
   - ตัดเนื้อหาออก
 
+ 
